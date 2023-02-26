@@ -1,3 +1,6 @@
+export FCFLAGS="-w -fallow-argument-mismatch -O2"
+export FFLAGS="-w -fallow-argument-mismatch -O2"
+
 #mkdir build -p
 #cd build 
 
@@ -13,6 +16,6 @@
 
 ./configure --prefix=$PREFIX --with-f90 --with-hdf5=$PREFIX
 make
-#make check 
-#make installcheck
+make check 
+make installcheck
 make install
