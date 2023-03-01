@@ -1,3 +1,6 @@
 *.pyc
 
-build_artifacts
+*.sln
+*.vcxproj
+*.vcxproj.*
+.vs/
