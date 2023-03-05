@@ -1,9 +1,6 @@
 REM Remove dot from PY_VER for use in library name
 set MY_PY_VER=%PY_VER:.=%
 
-mkdir build
-cd build
-
 cmake -G "Ninja" ^
       -D CMAKE_BUILD_TYPE=Release ^
       -D "CMAKE_PREFIX_PATH:FILEPATH=%PREFIX%" ^
