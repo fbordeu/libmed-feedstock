@@ -9,14 +9,20 @@ cmake -G "Ninja" ^
       -D MEDFILE_INSTALL_DOC=OFF ^
       -D MEDFILE_BUILD_PYTHON=ON ^
       -D "PYTHON_EXECUTABLE:FILEPATH=%PYTHON%" ^
-      -D "PYTHON_INCLUDE_DIR:PATH=%PREFIX%\include" ^
       -D "PYTHON_LIBRARY:FILEPATH=%PREFIX%\libs\python%MY_PY_VER%.lib" ^
-      -D PYTHON_INCLUDE_DIR:FILEPATH=%PREFIX%\include -S . -B build
+      -D "PYTHON_INCLUDE_DIR:FILEPATH=%PREFIX%\include" -S . -B build
 
 if errorlevel 1 exit 1
 cmake --build .\build --config Release
 if errorlevel 1 exit 1
 cmake --install .\build
+
+DEL %PREFIX%\bin\mdump
+COPY /y %PREFIX%\bin\mdump4 %PREFIX%\bin\mdump
+DEL %PREFIX%\bin\xmdump
+COPY /y %PREFIX%\bin\xmdump4 %PREFIX%\bin\xmdump
+
+
 REM ninja test
 REM if errorlevel 1 exit 1
 
