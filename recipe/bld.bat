@@ -17,9 +17,8 @@ cmake --build .\build --config Release
 if errorlevel 1 exit 1
 cmake --install .\build
 
-DEL %PREFIX%\bin\mdump
+DEL /q %PREFIX%\bin\mdump %PREFIX%\bin\xmdump
 COPY /y %PREFIX%\bin\mdump4 %PREFIX%\bin\mdump
-DEL %PREFIX%\bin\xmdump
 COPY /y %PREFIX%\bin\xmdump4 %PREFIX%\bin\xmdump
 
 
