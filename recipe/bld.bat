@@ -20,5 +20,5 @@ cmake --install .\build
 REM ninja test
 REM if errorlevel 1 exit 1
 
-move %LIBRARY_PREFIX%\lib\medC.dll %LIBRARY_PREFIX%\bin
-move %LIBRARY_PREFIX%\lib\medimport.dll %LIBRARY_PREFIX%\bin
+REM move %LIBRARY_PREFIX%\lib\medC.dll %LIBRARY_PREFIX%\bin
+REM move %LIBRARY_PREFIX%\lib\medimport.dll %LIBRARY_PREFIX%\bin

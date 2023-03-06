@@ -25,7 +25,6 @@ VERBOSE=1 cmake \
 
 cmake --build ./build --config Release
 cmake --install ./build
-#ctest ./build
 
 #./configure --prefix=$PREFIX --with-f90 --with-hdf5=$PREFIX
 #make
