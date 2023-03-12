@@ -20,7 +20,9 @@ cmake --install .\build
 DEL /q %PREFIX%\bin\mdump %PREFIX%\bin\xmdump
 COPY /y %PREFIX%\bin\mdump4 %PREFIX%\bin\mdump
 COPY /y %PREFIX%\bin\xmdump4 %PREFIX%\bin\xmdump
-XCOPY /s /e /y %PREFIX%\lib\python%PY_VER%\site-packages\med %SP_DIR%
+MKDIR %SP_DIR%\med
+XCOPY /s /e /y %PREFIX%\lib\python%PY_VER%\site-packages\med %SP_DIR%\med
+XCOPY /s /e /y %PREFIX%\lib\medC.* %LIBRARY_BIN%
 
 
 REM ninja test
