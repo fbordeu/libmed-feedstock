@@ -30,11 +30,11 @@ requirements:
       - ninja  # [win]
       - cmake
       - hdf5 >=1.10.2,<1.11
-      - python 3.* *_cpython
+      - python {{ python }}
   run:
       - {{ pin_compatible('hdf5', min_pin='x.x', max_pin='x.x') }}
       - {{ pin_compatible('python', min_pin='x.x', max_pin='x.x') }}
-      - python 3.* *_cpython
+      - python {{ python }}
 
 test:
   imports:
