@@ -1,33 +1,48 @@
-export FCFLAGS="-w -fallow-argument-mismatch -O2"
-export FFLAGS="-w -fallow-argument-mismatch -O2"
+#!/bin/bash
+export CLICOLOR_FORCE=1
+
+export FCFLAGS="-fdefault-integer-8 ${FCFLAGS}"
+export FFLAGS="-fdefault-integer-8 ${FFLAGS}"
+export CXXFLAGS="-std=gnu++98 ${CXXFLAGS}"
 
 echo "PYTHON=${PYTHON}"
 echo "PY_VER=${PY_VER}"
 echo "SP_DIR=${SP_DIR}"
 echo "STDLIB_DIR=${STDLIB_DIR}"
 
-PYTHON_INCLUDE_DIR=$(${PYTHON} -c 'import sysconfig;print("{0}".format(sysconfig.get_path("platinclude")))')
-echo "PYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_DIR}"
-#PYTHON_LIBRARY=$(${PYTHON} -c 'import sysconfig;print("{0}/{1}".format(*map(sysconfig.get_config_var, ("LIBDIR", "LDLIBRARY"))))')
-#echo "PYTHON_LIBRARY=${PYTHON_LIBRARY}"
+#if [[ "$mpi" == "nompi" ]]; then
+  export F77=${FC}
+  echo "Compiling for Sequential MPI=$mpi"
+#else
+#  echo "Compiling for MPI=$mpi"
+#  export OPAL_PREFIX=$PREFIX
+#  export CC=mpicc
+#  export CXX=mpicxx
+#  export FC=mpif90
+#  export F77=mpif77
+#  export F90=mpif90
+#fi
 
-VERBOSE=1 cmake \
-          -Wno-dev \
-          -D CMAKE_BUILD_TYPE=Release \
-          -D "CMAKE_PREFIX_PATH=${PREFIX}" \
-          -D "CMAKE_INSTALL_PREFIX=${PREFIX}" \
-          -D CMAKE_FIND_FRAMEWORK=NEVER \
-          -D "HDF5_ROOT_DIR=${LIBRARY_PREFIX}" \
-          -D MEDFILE_INSTALL_DOC=OFF \
-          -D MEDFILE_BUILD_PYTHON=ON \
-          -D "PYTHON_LIBRARY=${PREFIX}/lib" \
-          -D "PYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_DIR}" -S . -B build
+opts=("--with-swig=yes" )
 
-cmake --build ./build --config Release
-cmake --install ./build
+if [[ "${PKG_DEBUG}" == "True" ]]; then
+    echo "Debugging Enabled"
+    # Set compiler flags for debugging, for instance
+    export CFLAGS="-g -O0 ${CFLAGS}"
+    export CXXFLAGS="-g -O0 ${CXXFLAGS}"
+    export FCFLAGS="-g -O0 ${FCFLAGS}"
+    opts+=( "--enable-mesgerr" )
+    # Additional debug build steps
+else
+    echo "Debugging Disabled"
+    # Set compiler flags for production
+    opts+=( "--disable-mesgerr" )
+    # Additional production build steps
+fi
 
-#./configure --prefix=$PREFIX --with-f90 --with-hdf5=$PREFIX
-#make
-#make check 
-#make installcheck
-#make install
+chmod +x ./configure
+./configure "${opts[@]}" --prefix="$PREFIX" --with-hdf5="$PREFIX"
+make
+make install
+
+rm -rf "${PREFIX}/share/doc/med"
