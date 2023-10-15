@@ -27,7 +27,9 @@ requirements:
     - {{ compiler('c') }}                 # [not win]
     - {{ compiler('cxx') }}               # [not win]
     - {{ compiler('fortran') }}           # [not win]
-    - mingw64 13.1                        # [win]
+    - {{ compiler("m2w64_c") }}           # [win]
+    - {{ compiler("m2w64_cxx") }}           # [win]
+    - {{ compiler('m2w64_fortran') }}     # [win]
     - sysroot_linux-64 2.17               # [unix]
     - swig >=4.0.2
   host:
