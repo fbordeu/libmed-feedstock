@@ -36,7 +36,7 @@ requirements:
     - ninja                               # [win]
     - make                                # [not win]
     - cmake >=3.8                         # [win]
-    - hdf5 >=1.10.2,<1.11
+    - hdf5
     - python {{ python }}
     - astor
     - pybind11-stubgen
